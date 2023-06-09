@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* navの分↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+nav .nav-link{
+    color: white;
+}
+.nav-item a:hover{
+    color: #98AB40;
+
+}
+.logo_left{
+    width: 15rem;
+    height: auto;
+    float: left;
+    padding-top: 10px;
+    margin-bottom: 20px ;
+}
+.mainbase img{
+    width: 500px;
+}
+.main{
+    background-image: url(./osaka-castle-g1b72f36bc_1920.jpg);
+    background-color: black;
+    width: auto;
+    height: 800px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    
+}
+.main .mainbackground{
+    background-color: black;
+    background-attachment: fixed;
+    opacity: 0.7;
+    width: auto;
+    height: 800px; 
+}
+.mainlogo .happy1{
+    text-align: center;
+    margin: auto;
+    display: flex;
+    width: 1041px;
+    height: 253px;
+    opacity: 100%;
+}
+.mainlogo p{
+    font-size:30px;
+    text-align: center;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+/* 三つアイコン ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
+.mainicon{
+    display: flex;
+    justify-content: center;
+    
+}
+.mainicon .icon{
+    margin: 30px;
+}
+.icon img{
+    width: 100px;
+    height: 100px;
+}
+.icon p{
+    font-size:20px;
+    text-align: center;
+    padding-top: 20px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+}
+.icon a:link{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.icon a:hover{
+    color: #98AB40;
+    text-decoration: none;
+}
+.btn{
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.btn button{
+    color: #295A43;
+    text-align: center;
+    width: 400px;
+    height: 50px;
+    background-color: #FFFFFF;
+    border: solid #FFFFFF;
+    border-radius: 40px;
+    font-size:20px;
+    font-weight: bold;
+}
+/*------------footer----------*/
+body{
+	line-height: 1.5;
+	font-family: 'Poppins', sans-serif;
+}
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+.container{
+	max-width: 1170px;
+}
+.row{
+	display: flex;
+	flex-wrap: wrap;
+}
+ul{
+	list-style: none;
+}
+
+.footer{
+    padding: 50px 0;
+    border-top: 5px double rgb(151, 146, 146);
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #295A43;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -10px;
+	background-color: #295A43;
+	height: 2px;
+	box-sizing: border-box;
+	width: 100px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color:black;
+	text-decoration: none;
+	font-weight: 300;
+	color: #98AB40;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: black;
+	padding-left: 8px;
+}
+.footer-col .social-links a{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-color: rgba(255,255,255,0.2);
+	margin:0 10px 10px 0;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 50%;
+	color: #ffffff;
+	transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+	color: #24262b;
+	background-color: #ffffff;
+}
+
+/* footer の最後の分 */
+.last{
+	display: flex;
+	margin: 0;
+	padding: 5px 10px 0 10px;
+}
+.last li{
+	flex: 10 auto;
+	padding: 0px 10px 0 10px;
+	color: #295A43;
+}
+.footerlast ul {
+    list-style-type: none;
+    border-top: 3px double rgb(151, 146, 146) ;
+}
+.conimg {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 50px ;
+  }
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+

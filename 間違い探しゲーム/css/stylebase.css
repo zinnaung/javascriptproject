@@ -1,0 +1,70 @@
+nav .nav-link{
+    color: #000000;
+}
+.nav-item a:hover{
+    color: #98AB40;
+
+}
+header .logo_left{
+    width: 15rem;
+    height: auto;
+    float: left;
+    padding-top: 10px;
+}
+
+header{
+    background-color: white;
+    opacity: 100%;
+}
+header .imgcenter{
+    width: auto;
+    height: 250px;
+}
+.main{
+    /*background-image: url(../css/osaka-castle-g1b72f36bc_1920.jpg);*/
+    width: auto;
+    height: 800px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+.main .mainbackground{
+    background-attachment: fixed;
+    width: auto;
+    height: 800px;
+}
+
+.last{
+	display: flex;
+	margin: 0;
+	padding: 5px 10px 0 10px;
+}
+.last li{
+	flex: 10 auto;
+	padding: 0px 10px 0 10px;
+	color: #295A43;
+}
+.footerlast ul {
+    list-style-type: none;
+    border-top: 3px double rgb(151, 146, 146) ;
+}
+.conimg {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 50px ;
+  }
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .toi{
+      text-align: center;
+      font-size: 20px;
+  }
+
+
+
+

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Document</title>
+  <style>
+    #question-wrapper{
+      width: 500px;
+      border-radius: 15px;
+      margin: 0 auto;
+      overflow:hidden;
+      box-shadow: 0px 4px 8px -2px rgba(114, 114, 114, 0.288);
+      border: 0.5px solid rgb(201, 201, 201);
+    }
+    #questions{
+      display:flex;
+      width: 5000px;
+    }
+    .q{
+      width: 460px;
+      height: 600px;
+      padding: 20px;
+      background: rgb(28, 117, 50);
+      position: relative;
+}
+    /* Previous, Next Button*/
+    #controls{
+      width: 200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    /* all image */
+    .img{
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      position: absolute;
+      left: 20px;
+      top: 110px;
+    }
+    /*answer style */
+    .ans1,.ans2,.ans3{
+      margin-left: 320px;
+      padding: 5px;
+      margin-bottom: 5px;
+      margin-top: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.178);
+      
+    }
+    .ans1:hover,.ans2:hover,.ans3:hover{
+      background-color: rgba(255, 255, 255, 0.267);
+    }
+
+    /*answer style */
+    .q{
+      font-size: 20px;
+      font-weight: normal;
+      font-family: 'Klee One', cursive;
+      color: rgb(255, 255, 255);
+    }
+
+    .correct{
+      background-color: rgba(43, 255, 0, 0.466) !important;
+    }
+    .wrong{
+      background-color: rgba(151, 9, 9, 0.822) !important;
+    }
+    .answer{
+      color:white;
+      margin-top: 100px;
+     
+    }
+    .reason {
+      font-weight: 400;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Question -->
+  <div id="question-wrapper">
+    <div id="questions">
+    </div>
+</div>
+
+  <!-- Score -->
+<div style="display: flex;">
+  <div id="score" style="flex:1; text-align: right;">
+    Score: <span id="score-mark">0</span>
+</div>
+
+  <!-- Controls -->
+<div id="controls">
+  <button id="prev">Previous</button>
+  <button id="next">Next</button>
+</div>
+
+  <!-- Time -->
+<div id="time" style="flex:1">
+  Time: <span id="time-count">01:00</span>
+</div>
+</div>
+<div id="timeout" style="text-align:center; display: none;">
+  You are timeout
+</div>
+</body>
+<script>
+  var questions = [
+    // 1
+    {
+      question: "通天閣の高さ",
+      options: ['108m','634m','103m'],
+      correct: '108m',
+      img: "https://images.unsplash.com/photo-1595476513916-a435d93d1f6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
+      userChoose: null,
+      reason: '初代の通天閣は103ｍだったが、２０１６年に通天閣頂上部にある避雷針を3ｍからｍに延長したため高さが108ｍになった。',
+    },
+    // 2
+    {
+      question: "USJの最寄り駅",
+      options: ['ユニバーサルシティ駅','舞浜駅','ユニバ前駅'],
+      correct: 'ユニバーサルシティ駅',
+      img: "https://cdn.pixabay.com/photo/2016/12/18/03/12/usj-1914942_960_720.jpg",
+      userChoose: 1,
+      reason: 'ユニバーサル・スタジオ・ジャパンへの最寄り駅はＪＲ桜島線（ゆめ咲線）「ユニバーサルシティ駅」となっている。入場ゲートまで徒歩４分程ト非常にアクセスがよい。',
+    },
+    // 3
+    {
+      question: "大阪で一番有名な水族館",
+      options: ['通天閣水族館','江の島水族館','海遊館'],
+      correct: '海遊館',
+      img: "https://cdn.pixabay.com/photo/2017/08/26/19/45/polar-bear-2684110_960_720.jpg",
+      userChoose: 1,
+      reason: '大阪、天保山にある「海遊館」は大迫力の巨大水槽で環太平洋を表現する世界最大級の水族館である。６２０種類、30000点の海の生き物が様々な手法で展示されている。',
+    },
+    // 4
+    {
+      question: "大阪の名物「たこ焼き、お好み焼き」などを総称して何と呼ぶ",
+      options: ['パチモン','粉もん','焼きもん'],
+      correct: '粉もん',
+      img: "https://images.unsplash.com/photo-1591114320268-fb3aac361d8e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+      userChoose: 1,
+      reason: '大阪は商人の町で忙しい仕事の合間にさっと食べることができ腹持ちの良い「粉もん」が好まれたため小麦粉料理が発展したという説が有力である。',
+    },
+    // 5
+    {
+      question: "大阪の玄関口、関西国際空港は何市にある",
+      options: ['大阪市','関西市','泉佐野市'],
+      correct: '泉佐野市',
+      img: "https://images.unsplash.com/photo-1542296332-2e4473faf563?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80",
+      userChoose: 1,
+      reason: '大阪の入口ともいえる関西国際空港だが、大阪の市街地までは約50ｋｍ離れており空港自体は大阪府泉佐野市に位置する。',
+    },
+    // 6
+    {
+      question: "大阪、海遊館のすぐそばにある天保山観覧車は一周に何分かかるか",
+      options: ['約１５分','約３０分','約６０分'],
+      correct: '約１５分',
+      img: "https://images.unsplash.com/photo-1566783997114-d1322a002a0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      userChoose: 1,
+      reason: '直径１００mの、世界最大級の天保山観覧車は約１５分間の空の旅を体験することができる。ライトアップは打ち上げ半日のような美しさである。',
+    },
+    // 7
+    {
+      question: "大阪にあるあべのハルカスは地上何ｍの展望台があるか",
+      options: ['地上270ｍ','地上500ｍ','地上300m'],
+      correct: '地上300m',
+      img: "https://images.unsplash.com/photo-1552750326-e47813e43f50?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80",
+      userChoose: 1,
+      reason: '「あべのハルカス」にある展望台「ハルカス300」は地上３００mから大麻簡保街並みを見渡すことができる。天候がよければ神戸市内や明石海峡大橋、京都タワーまで見渡す都ができる。',
+    },
+    // 8
+    {
+      question: "大阪のグリコの看板のある道頓堀にかかる橋の名は",
+      options: ['大阪橋','戎橋','グリコ橋'],
+      correct: '戎橋',
+      img: "https://images.unsplash.com/photo-1554311922-5fa57457e0d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      userChoose: 1,
+      reason: '戎橋のなめの故来は諸説あるが、一番有力なのは江戸時代に現在の難波駅の南側にある今宮戎神社への参拝に行くときに橋を通ったことからなずけられた。',
+    },
+    // 9
+    {
+      question: "大阪人が世界生まれた簡単に食べられて保存できる世界初の食べ物は何",
+      options: ['インスタントラーメン','冷凍食品','缶詰'],
+      correct: 'インスタントラーメン',
+      img: "https://cdn.pixabay.com/photo/2021/09/11/10/42/camping-6615226_960_720.jpg",
+      userChoose: 1,
+      reason: '日清食品の創業者安藤百福氏が１９５８年に世界初の即席めんを生み出し７１年には世界初のカップヌードルを生み出した。',
+    },
+    // 10
+    {
+      question: "大阪城ができたのは何年でしょう",
+      options: ['１３８５年','１８５３年','１５８３年'],
+      correct: '１５８３年',
+      img: "https://images.unsplash.com/photo-1582337628667-1994660f2648?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1169&q=80",
+      userChoose: 1,
+      reason: '大阪城は天下統一を目指す豊臣秀吉によって天正11年(１５８３年)に大阪(石山)本願寺後で築造が開始された。',
+    }
+  ]
+// Time Control
+  let interval = setInterval(countDown, 1000);
+
+  function countDown(){
+    const currentTime = document.getElementById('time-count').textContent; //05:00
+    let minutes = Number(currentTime.split(":")[0]); //05
+    let seconds = Number(currentTime.split(":")[1]); //00
+
+    let newtime = ""; //04:59
+
+    if(seconds === 0 && minutes > 0){
+        minutes -= 1;
+        seconds = 59;
+
+        let stringMinutes = minutes.toString().length === 1 ? "0"+minutes : minutes;
+        let stringSeconds = seconds.toString();
+        newtime = stringMinutes + ":" + stringSeconds;
+
+        document.getElementById('time-count').textContent = newtime;
+        return;
+    }
+    else if(seconds > 0){
+      seconds -= 1;
+      let stringMinutes = minutes.toString().length === 1 ? "0"+minutes : minutes;
+      let stringSeconds = seconds.toString().length  === 1 ? "0"+seconds : seconds;
+      newtime = stringMinutes + ":" + stringSeconds;
+      document.getElementById('time-count').textContent = newtime;
+      return;
+    }
+    else{
+      document.querySelectorAll('.ans').forEach((e)=>{
+        e.onclick = null;
+      });
+      clearInterval(interval);
+      document.getElementById('timeout').style.display = "block";
+    }
+  
+  }
+
+  //Answer Check
+  function checkAnswer (index, option, answerEle) {
+    document.querySelectorAll(".answer"+index).forEach((e)=>{
+      e.onclick = null;
+    });
+
+    const correctAnswer = questions[index]["correct"];
+    if(correctAnswer === option) {
+        answerEle.classList.add("correct");
+        document.getElementById("answer"+index).textContent = "正解";
+        document.getElementById("reason"+index).textContent = questions[index]["reason"];
+
+        document.getElementById("score-mark").textContent = Number(document.getElementById("score-mark").textContent) + 1;
+    }else{
+        answerEle.classList.add("wrong");
+        document.getElementById("answer"+index).textContent = "違う";
+        document.getElementById("reason"+index).textContent = questions[index]["reason"];
+    }
+  }
+  for(var i = 0; i < questions.length; i++){
+    var userChoose = questions[i]["userChoose"];
+    var options = questions[i]["options"];
+
+    document.getElementById('questions').innerHTML += `
+    <div id="q${i+1}" class="q">
+    <span>Question ${i+1}</span>
+    <img class="img" src="${questions[i]["img"]}"/>
+    <div class="question">${questions[i]["question"]}</div>
+    <div class="ans1 ans answer${i}" onclick="checkAnswer(${i},'${options[0]}',this)">A.${options[0]}</div>
+    <div class="ans2 ans answer${i}" onclick="checkAnswer(${i},'${options[1]}',this)">B.${options[1]}</div>
+    <div class="ans3 ans answer${i} " onclick="checkAnswer(${i},'${options[2]}',this)">C.${options[2]}</div>
+    <div class="answer" id="answer${i}">
+      </div>
+    <div class="reason" id="reason${i}">
+    </div>
+  </div>
+  
+    `;
+  }
+
+
+
+  var q = {
+    "1": document.getElementById('q1'),
+    "2": document.getElementById('q2'),
+    "3": document.getElementById('q3'),
+    "4": document.getElementById('q4'),
+    "5": document.getElementById('q5'),
+    "6": document.getElementById('q6'),
+    "7": document.getElementById('q7'),
+    "8": document.getElementById('q8'),
+    "9": document.getElementById('q9'),
+    "10": document.getElementById('q10'),
+  }
+  var prev = document.getElementById("prev");
+  var next = document.getElementById("next");
+
+  var currentQuestion = 1;
+
+  next.addEventListener('click',function(){
+    if(currentQuestion < 10) {
+      currentQuestion +=1;
+      q[currentQuestion].scrollIntoView({ behavior: 'smooth'});
+    }
+  });
+
+  prev.addEventListener('click',function(){
+    if(currentQuestion > 1) {
+      currentQuestion -=1;
+      q[currentQuestion].scrollIntoView({ behavior: 'smooth'});
+    }
+  });
+</script>
+</html>

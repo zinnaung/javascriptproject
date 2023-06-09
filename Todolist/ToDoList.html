@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="in" value="dd" />
+    <button id="btn">Add</button>
+    <div id="lists"></div>
+
+    <script>
+        const inputVal = document.getElementById('in').value;
+        const btn=document.getElementById('btn');
+        const lists = document.getElementById('lists');
+
+        const addFunction = () =>{
+
+            const divTag = document.createElement('div');
+            divTag.style.display = 'flex';
+            divTag.style.alignItems = 'center';
+
+            const h1Tag = document.createElement('h1');
+            h1Tag.textContent = inputVal;
+            h1Tag.style.color = 'red';
+
+            const btnTag = document.createElement('button');
+            btnTag.textContent= 'delete';
+
+            divTag.appendChild(h1Tag);
+            divTag.appendChild(btnTag);
+
+            lists.append(divTag);
+
+            h1Tag.addEventListener('click',()=>{
+                h1Tag.style.textDecoration = 'line-through';
+            })
+            btnTag.addEventListener('click',()=>{
+                h1Tag.remove();
+                btnTag.remove();
+            })
+        }
+
+        btn.addEventListener('click',addFunction);
+
+       
+
+    </script>
+</body>
+</html>

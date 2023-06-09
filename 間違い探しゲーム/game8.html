@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/stylebase.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+  <style>
+     #photos{
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .diff{
+      width: 20px;
+      height: 20px;
+      border: 5px solid rgb(30, 255, 0);
+      border-radius: 50%;
+      position: absolute;
+      opacity: 0;
+    }
+    #left{
+      position: relative;
+    
+    }
+
+    #right{
+      position: relative;
+     
+    }
+    @media (min-width:801px)  { 
+      #left {
+        left: 100px;
+      }
+      #right {
+        left: -150px;
+      }
+     }
+    #dif1{
+
+      top: 40px;
+      left: 330px;
+      width: 30px;
+      height: 30px;
+    }
+    #dif2{
+
+      top: 290px;
+      left: 15px;
+      height: 30px;
+    }
+    #dif3{
+      top: 290px;
+      left: 175px;
+      width: 40px;
+      height: 40px;
+    }
+    #dif4{
+      top: 290px;
+      left: 255px;
+      width: 40px;
+      height: 40px;
+    }
+    #dif5{
+      top: 460px;
+      left: 40px;
+      width: 30px;
+      height: 30px;
+     
+    }
+    #button_area{
+      padding: 20px;
+      position: relative;
+      left: -50px;
+    }
+    
+    #prev{
+      border: 1px solid black;
+      border-radius: 10px;
+      padding: 10px 30px 10px 30px;
+      color: rgb(107, 107, 0);
+      text-decoration: none;
+  
+    }
+    #next{
+      border: 1px solid rgb(0, 0, 0);
+      border-radius: 10px;
+      padding: 10px 30px 10px 30px;
+      color: rgb(107, 107, 0);
+      position: relative;
+      left: 100px;
+      top: -25px;
+      text-decoration: none;
+    }
+    #prev:hover{
+      background-color: rgb(255, 238, 0);
+      color: black;
+    }
+    #next:hover{
+      background-color: rgb(255, 238, 0);
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <header>
+        <nav>
+          <a href="index.html"><img class="logo_left" src="css/コンポーネント 6 – 2.png" alt=""></a>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">クイズ</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">ショッピング</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">ログイン</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled">EN・JA</a>
+                </li>
+              </ul>
+        </nav>
+        <div class="conimg">
+          <img class="imgcenter" src="css/グループ 9.png" alt="">
+          <div class="centered">間違い探しゲーム</div>
+        </div>
+    </header>
+    <!-- 次の内容下記に入力してください↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+    <div>
+    <a class="toi">
+      <p>２つの画像を比べて<br>
+        制限時間内に間違いを５個見つけてください<br>
+        スタートボタンを押してください
+      </p>
+    </div>
+    <!-- ↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
+  <h1>Find the difference!</h1>
+  <h2>Point: <span id="point">0</span></h2>
+  <h2>Time: <span id="time"></span></h2>
+  <button id="restart"></button>
+
+  <div id="photos">
+    <div id="left">
+      <img src="./imgs/game8/photo_left.jpg"/>
+    </div>
+    <div id="right">
+      <img src="./imgs/game8/photo_right.jpg"/>
+      <div id="dif1" class="diff"></div>
+      <div id="dif2" class="diff"></div>
+      <div id="dif3" class="diff"></div>
+      <div id="dif4" class="diff"></div>
+      <div id="dif5" class="diff"></div>
+    </div>
+  </div>
+  <div id="button_area" style="width: 200px; margin: 0 auto;">
+    <a id="prev" href="./game7.html">前</a>
+    <a id="next" href="./game9.html">次</a>
+    </div>
+
+    <div class="footerlast"> 
+      <ul class="last">
+       <li>A product of AAAGroups</li>
+       <li style="border-left: 0.1px solid rgb(151, 146, 146);"><a style="text-decoration: none;color: #295A43;" href="">お問い合わせ</a></li>
+       <li style="margin-left: 250px;"></a>Copy right(C) 2021 TSB All rights reserved.</li>
+      </ul>
+  </div>    
+
+    <script>
+     let start = false;
+    let path = window.location.pathname;
+    let pathArray = path.split('/');
+    let filename = pathArray[pathArray.length -1];
+    
+    if(filename === "game1.html"){
+      start = false;
+    }
+    else {
+      start = true;
+    }
+    let diffs = document.getElementsByClassName('diff');
+  
+      if(!start) {
+        document.getElementById('photos').style.display = "none";
+        document.getElementById('button_area').style.display = "none";
+      }
+  
+      document.getElementById('restart').addEventListener('click', function(){
+        document.getElementById('photos').style.display = "flex";
+        document.getElementById('button_area').style.display = "block";
+        start = true;
+        document.getElementById('time').textContent = "01:00";
+        localStorage.setItem('time', '01:00');  
+        document.getElementById('point').textContent = "0";
+        localStorage.setItem('point', '0');
+      });
+  
+      if(!localStorage.getItem('time')){
+        localStorage.setItem('time', '01:00');  
+      }
+      
+      let point = "0";
+  
+      if(!localStorage.getItem('point')){
+        localStorage.setItem('point') = "0";
+      }
+      else {
+        point = localStorage.getItem('point');
+        document.getElementById('point').textContent = point;
+      }
+  
+      document.getElementById('time').textContent = localStorage.getItem('time');
+  
+  
+  
+      if(localStorage.getItem('time') === "00:00"){
+        start = false;
+      }
+     
+      let count = 0;
+  
+      for(diff of diffs){
+        diff.addEventListener('click', function(){
+          if(start){
+  
+          this.style.opacity = 1;
+          count++;
+          if(count === 5){
+            setTimeout(function(){
+              alert('Congratulation!')
+                point = +point + 1;
+                document.getElementById('point').innerHTML = point;    
+                localStorage.setItem('point', point);
+            }, 0);
+       
+          }
+        }
+        })
+      }
+  
+  
+      //time logic 
+      let interval = setInterval(countDown, 1000);
+  
+    function countDown(){
+      if(start) {
+      const currentTime = document.getElementById('time').textContent; //05:00
+      let minutes = Number(currentTime.split(":")[0]); //05
+      let seconds = Number(currentTime.split(":")[1]); //00
+  
+      let newtime = ""; //04:59
+  
+      if(seconds === 0 && minutes > 0){
+          minutes -= 1;
+          seconds = 59;
+  
+          let stringMinutes = minutes.toString().length === 1 ? "0"+minutes : minutes;
+          let stringSeconds = seconds.toString();
+          newtime = stringMinutes + ":" + stringSeconds;
+  
+          document.getElementById('time').textContent = newtime;
+          localStorage.setItem('time', newtime);
+          return;
+      }
+      else if(seconds > 0){
+        seconds -= 1;
+        let stringMinutes = minutes.toString().length === 1 ? "0"+minutes : minutes;
+        let stringSeconds = seconds.toString().length  === 1 ? "0"+seconds : seconds;
+        newtime = stringMinutes + ":" + stringSeconds;
+        document.getElementById('time').textContent = newtime;
+        localStorage.setItem('time', newtime);
+        return;
+      }
+      else{
+        clearInterval(interval);
+        start = false;
+        document.getElementById('prev').href =  "";
+        document.getElementById('next').href =  "";
+        alert("Game Over!");
+      }
+      }
+    }
+  
+    </script>
+</body>
+</html>
